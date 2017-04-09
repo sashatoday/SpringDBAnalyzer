@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringDbAnalyzerApplication {
+public class MainApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringDbAnalyzerApplication.class, args);
+		SpringApplication.run(MainApp.class, args);
 	}
 }

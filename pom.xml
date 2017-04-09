@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>gs-rest-service</artifactId>
+    <artifactId>db-rest-service</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -27,6 +27,13 @@
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.homework.hibernate</groupId>
+            <artifactId>hibernate-db-analyzer</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../hibernate-db-analyzer/out/artifacts/hibernate_db_analyzer_jar/hibernate-db-analyzer.jar</systemPath>
         </dependency>
     </dependencies>
 
