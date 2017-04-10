@@ -1,0 +1,310 @@
+<html>
+    <head>
+        
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+        <script type="text/javascript">
+
+            window.onload = function () {
+
+                document.getElementById("SSGReport").onclick = function SSGFunc(e) {
+                    e.preventDefault();
+
+                    var SSGChart = new Highcharts.Chart({
+                        chart: {
+                            type: 'column',
+                            renderTo: 'container'
+                        },
+                        title: {
+                            text: 'Slow Storage groups'
+                        },
+                        xAxis: {
+                            type: 'category',
+                            title: {
+                                text: 'Storage group id'
+                            },
+                            labels: {
+                                enabled: true
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Count failed intervals'
+                            }
+                        },
+                        plotOptions: {
+                            column: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        series: [{
+                                name: 'Count failed intervals',
+                            }]
+                    });
+
+                    var drawSSGChart = function (receivedData) {
+                        var json = JSON.parse(receivedData);
+
+                        var chartData = [];
+                        for (var i = 0; i < json.data.length; i++)
+                        {
+                            xyPair = [];
+                            xyPair[0] = json.data[i][1]; //set id
+                            xyPair[1] = json.data[i][2]; //set repetitions
+                            chartData[i] = xyPair;
+                        }
+
+                        SSGChart.series[0].setData(chartData);
+
+                    }
+
+                    var handleStateChange = function () {
+                        switch (xmlHttp.readyState) {
+                            case 0 : // UNINITIALIZED
+                            case 1 : // LOADING
+                            case 2 : // LOADED
+                            case 3 : // INTERACTIVE
+                                break;
+                            case 4 : // COMPLETED
+                                drawSSGChart(xmlHttp.responseText);
+                                break;
+                            default:
+                                alert("error");
+                        }
+                    }
+
+                    var xmlHttp = new XMLHttpRequest();
+
+                    xmlHttp.open('GET', "http://localhost:8080/reporting?report=SlowStorageGroups", true); // false for synchronous request
+                    xmlHttp.onreadystatechange = handleStateChange;
+                    xmlHttp.send(null);
+
+                }
+
+
+                document.getElementById("QLoading").onclick = function QLoadingFunc(e) {
+                    e.preventDefault();
+                    var QLoadingChart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'container'
+                        },
+                        title: {
+                            text: 'Queue loading'
+                        },
+                        xAxis: {
+                            type: 'category',
+                            title: {
+                                text: 'Time'
+                            },
+                            labels: {
+                                enabled: true
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Counter'
+                            }
+                        },
+                        series: [{
+                                name: 'Count 7'
+                            },
+                            {
+                                name: 'Count 8'
+                            },
+                            {
+                                name: 'Count 9'
+                            }]
+                    });
+
+                    var drawQLoadingChart = function (receivedData) {
+                        var json = JSON.parse(receivedData);
+
+                        var chartData1 = [];
+                        var chartData2 = [];
+                        var chartData3 = [];
+                        for (var i = 0; i < json.data.length; i++)
+                        {
+                            var timeVal = json.data[i][0];
+
+                            //count 7
+                            var firstPair = [];
+                            firstPair[0] = timeVal;
+                            firstPair[1] = json.data[i][1];
+                            chartData1[i] = firstPair;
+
+                            //count 8
+                            var secondPair = [];
+                            secondPair[0] = timeVal;
+                            secondPair[1] = json.data[i][2];
+                            chartData2[i] = secondPair;
+
+                            //count 9
+                            var thirdPair = [];
+                            thirdPair[0] = timeVal;
+                            thirdPair[1] = json.data[i][3];
+                            chartData3[i] = thirdPair;
+                        }
+
+
+
+                        QLoadingChart.series[0].setData(chartData1);
+                        QLoadingChart.series[1].setData(chartData2);
+                        QLoadingChart.series[2].setData(chartData3);
+
+                    }
+
+                    var handleStateChange = function () {
+                        switch (xmlHttp.readyState) {
+                            case 0 : // UNINITIALIZED
+                            case 1 : // LOADING
+                            case 2 : // LOADED
+                            case 3 : // INTERACTIVE
+                                break;
+                            case 4 : // COMPLETED
+                                drawQLoadingChart(xmlHttp.responseText);
+                                break;
+                            default:
+                                alert("error");
+                        }
+                    }
+
+                    var dirId = document.getElementById("dirId").value;
+                    if (dirId.length < 1) {
+                        alert("Please, specify the DirectorID in the textbox.");
+                        return;
+                    } else
+                    {
+                        var xmlHttp = new XMLHttpRequest();
+
+                        xmlHttp.open('GET', "http://localhost:8080/reporting?report=QueueLoading&dirId=" + dirId, true); // false for synchronous request
+                        xmlHttp.onreadystatechange = handleStateChange;
+                        xmlHttp.send(null);
+                    }
+
+                }
+
+
+                document.getElementById("SGLoading").onclick = function SGLoadingFunc(e) {
+                    e.preventDefault();
+                    var SGLoadingChart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'container'
+                        },
+                        title: {
+                            text: 'StorageGroup loading'
+                        },
+                        xAxis: {
+                            type: 'category',
+                            title: {
+                                text: 'Time'
+                            },
+                            labels: {
+                                enabled: true
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Counter'
+                            }
+                        },
+                        series: [{
+                                name: 'Count 6'
+                            },
+                            {
+                                name: 'Count 7'
+                            }]
+                    });
+
+                    var drawSGLoadingChart = function (receivedData) {
+                        var json = JSON.parse(receivedData);
+
+                        var chartData1 = [];
+                        var chartData2 = [];
+                        for (var i = 0; i < json.data.length; i++)
+                        {
+                            var timeVal = json.data[i][0];
+
+                            //count 6
+                            var firstPair = [];
+                            firstPair[0] = timeVal;
+                            firstPair[1] = json.data[i][1];
+                            chartData1[i] = firstPair;
+
+                            //count 7
+                            var secondPair = [];
+                            secondPair[0] = timeVal;
+                            secondPair[1] = json.data[i][2];
+                            chartData2[i] = secondPair;
+                        }
+                        
+                        SGLoadingChart.series[0].setData(chartData1);
+                        SGLoadingChart.series[1].setData(chartData2);
+                    }
+
+                    var handleStateChange = function () {
+                        switch (xmlHttp.readyState) {
+                            case 0 : // UNINITIALIZED
+                            case 1 : // LOADING
+                            case 2 : // LOADED
+                            case 3 : // INTERACTIVE
+                                break;
+                            case 4 : // COMPLETED
+                                drawSGLoadingChart(xmlHttp.responseText);
+                                break;
+                            default:
+                                alert("error");
+                        }
+                    }
+
+                    var sgId = document.getElementById("sgId").value;
+                    if (sgId.length < 1) {
+                        alert("Please, specify the StorageGroupID in the textbox.");
+                        return;
+                    } else
+                    {
+                        var xmlHttp = new XMLHttpRequest();
+
+                        xmlHttp.open('GET', "http://localhost:8080/reporting?report=StorageGroupLoading&sgId=" + sgId, true); // false for synchronous request
+                        xmlHttp.onreadystatechange = handleStateChange;
+                        xmlHttp.send(null);
+                    }
+
+                }
+
+            }
+
+        </script>
+        
+    </head>
+    <body>
+        <h3>Reports presentation</h3>
+
+        <form id="Reports">
+            <table border=0.9>
+
+                <tr>
+                    <td align=left><button id="SSGReport">SlowStorageGroupsReport</button></td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <tr>
+                    <td align=left><button id="QLoading">QueueLoadingReport</button></td>
+                    <td><p><font size="2">DirectorID: </font><br></td>
+                    <td><input id="dirId" type="text" size="10"></td>
+                </tr>
+
+                <tr>
+                    <td align=left><button id="SGLoading">SGLoadingReport</button></td>
+                    <td><p><font size="2">StorageGroupID: </font><br></td>
+                    <td><input id="sgId" type="text" size="10"></td>
+                </tr>
+
+            </table>
+
+        </form>
+        <div id="container" style="height: 400px"></div>
+
+    </body>
+</html>
