@@ -19,7 +19,7 @@ import java.util.Iterator;
 public class ReportProblemIntervals extends ReportData {
 
 	@Override
-	public void FillData() {
+	public void FillData(String degenerateParam) {
 		Analyzer analyzer = new Analyzer();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;

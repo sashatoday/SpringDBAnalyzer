@@ -15,8 +15,19 @@ public abstract class ReportData {
 
 	public ReportData() {
 		this.data = new ArrayList<>();
+		String emptyParam = "";
+		DoFillData(emptyParam);
+	}
+
+	public ReportData(String param) {
+		this.data = new ArrayList<>();
+		DoFillData(param);
+	}
+
+	private void DoFillData(String param)
+	{
 		try {
-			FillData();
+			FillData(param);
 			responseMessage = "Data collecting succeed.";
 		}
 		catch (ReportDataFillingException exc) {
@@ -27,8 +38,9 @@ public abstract class ReportData {
 		}
 	}
 
+
 	//required implementation in subclasses (each report type)
-	public abstract void FillData() throws ReportDataFillingException;
+	public abstract void FillData(String param) throws ReportDataFillingException;
 
 	public List<Object> getData() {
 		return this.data;

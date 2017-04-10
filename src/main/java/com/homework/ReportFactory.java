@@ -7,7 +7,7 @@ import com.homework.reports_data.*;
  */
 public class ReportFactory {
 
-	public static ReportData CreateReport (String reportName) {
+	public static ReportData CreateReport (String reportName, String dirId, String sgId) {
 		switch (reportName)
 		{
 			case "AllDirectors":
@@ -21,14 +21,15 @@ public class ReportFactory {
 			case "SlowStorageGroups":
 				return new ReportSlowStorageGroups();
 			case "QueueLoading":
-				return new ReportQueueLoading();
+				return new ReportQueueLoading(dirId);
 			case "StorageGroupLoading":
-				return new ReportStorageGroupLoading();
+				return new ReportStorageGroupLoading(sgId);
 			default:
 				return new ReportData() {
 					@Override
-					public void FillData() {
-						throw new ReportDataFillingException("Specified report name is incorrect: " + reportName);
+					public void FillData(String degenerateParam) {
+						throw new ReportDataFillingException(
+								"Specified report name is incorrect: " + reportName);
 					}
 				};
 		}

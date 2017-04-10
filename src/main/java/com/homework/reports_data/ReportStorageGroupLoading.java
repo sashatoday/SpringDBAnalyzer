@@ -1,6 +1,7 @@
 package com.homework.reports_data;
 
 import com.homework.ReportData;
+import com.homework.ReportDataFillingException;
 import com.homework.hibernate.Analyzer;
 import com.homework.hibernate.HibernateUtil;
 import com.homework.hibernate.query_results.StorageGroupLoading;
@@ -17,8 +18,17 @@ import java.util.Iterator;
  */
 public class ReportStorageGroupLoading extends ReportData {
 
+	public ReportStorageGroupLoading (String storageGroupId) {
+		super(storageGroupId);
+	}
+
 	@Override
-	public void FillData() {
+	public void FillData(String storageGroupId) {
+		//check param
+		if (storageGroupId == null || storageGroupId.equals(""))
+			throw new ReportDataFillingException(
+				"ReportStorageGroupLoading requires storageGroupId to be specified in the URL.");
+
 		Analyzer analyzer = new Analyzer();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
@@ -27,8 +37,7 @@ public class ReportStorageGroupLoading extends ReportData {
 			transaction = session.beginTransaction();
 
 			columnNames = new Object[] {"time, count6, count7"};
-			String sgId = "VHDC2DBESX_SG";
-			StorageGroupLoading sgLoading = analyzer.GetSGLoading(session, sgId);
+			StorageGroupLoading sgLoading = analyzer.GetSGLoading(session, storageGroupId);
 			Iterator it = sgLoading.GetContent().iterator();
 			while(it.hasNext()) {
 				Object[] data = (Object [])it.next();

@@ -33,7 +33,7 @@
             <artifactId>hibernate-db-analyzer</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../hibernate-db-analyzer/out/artifacts/hibernate_db_analyzer_jar/hibernate-db-analyzer.jar</systemPath>
+            <systemPath>${project.basedir}/../hibernate-db-analyzer/out/artifacts/HibernateDBAnalyzer_jar/hibernate-db-analyzer.jar</systemPath>
         </dependency>
     </dependencies>
 

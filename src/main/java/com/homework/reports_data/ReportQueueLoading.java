@@ -1,6 +1,7 @@
 package com.homework.reports_data;
 
 import com.homework.ReportData;
+import com.homework.ReportDataFillingException;
 import com.homework.hibernate.Analyzer;
 import com.homework.hibernate.HibernateUtil;
 import com.homework.hibernate.query_results.QueueLoading;
@@ -17,8 +18,15 @@ import java.util.Iterator;
  */
 public class ReportQueueLoading extends ReportData {
 
+	public ReportQueueLoading (String directoryId) {
+		super(directoryId);
+	}
+
 	@Override
-	public void FillData() {
+	public void FillData(String directoryId) {
+		if (directoryId == null || directoryId.equals(""))
+			throw new ReportDataFillingException(
+				"ReportQueueLoading requires directoryId to be specified in the URL.");
 		Analyzer analyzer = new Analyzer();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
@@ -27,8 +35,7 @@ public class ReportQueueLoading extends ReportData {
 			transaction = session.beginTransaction();
 
 			columnNames = new Object[] {"time, count7, count8, count9"};
-			String dirId = "FA-4D";
-			QueueLoading queueLoading = analyzer.GetQueueLoading(session, dirId);
+			QueueLoading queueLoading = analyzer.GetQueueLoading(session, directoryId);
 			Iterator it = queueLoading.GetContent().iterator();
 			while(it.hasNext()) {
 				Object[] data = (Object [])it.next();

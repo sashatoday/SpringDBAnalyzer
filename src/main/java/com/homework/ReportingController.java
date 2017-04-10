@@ -16,7 +16,10 @@ public class ReportingController {
 	}
 
 	@RequestMapping(value = "/reporting", method = RequestMethod.GET, produces = "application/json")
-	public ReportData reporting(@RequestParam(value="report") String reportName) {
-		return ReportFactory.CreateReport(reportName);
+	public ReportData reporting(@RequestParam(value="report") String reportName,
+								@RequestParam(value="dirId", defaultValue = "") String directorId,
+								@RequestParam(value="sgId", defaultValue = "") String storageGroupId) {
+		return ReportFactory.CreateReport(reportName, directorId, storageGroupId);
+
 	}
 }
