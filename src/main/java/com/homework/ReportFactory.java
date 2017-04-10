@@ -1,16 +1,25 @@
 package com.homework;
 
+import com.homework.reports_data.*;
+
 /**
  * Created by Sasha on 09.04.17.
  */
 public class ReportFactory {
 
-	public static ReportData CreateReport (String reportName)
-	{
+	public static ReportData CreateReport (String reportName) {
 		switch (reportName)
 		{
-			case "Report1":
-				return new Report1();
+			case "AllDirectors":
+				return new ReportAllDirectors();
+			case "AllStorageGroups":
+				return new ReportAllStorageGroups();
+			case "ProblemDirectors":
+				return new ReportProblemDirectors();
+			case "ProblemIntervals":
+				return new ReportProblemIntervals();
+			case "SlowStorageGroups":
+				return new ReportSlowStorageGroups();
 			default:
 				return new ReportData() {
 					@Override

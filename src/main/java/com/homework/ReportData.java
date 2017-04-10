@@ -1,7 +1,8 @@
 package com.homework;
 
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,24 +10,35 @@ import java.util.Map;
  */
 public abstract class ReportData {
 	private String responseMessage;
-	protected final Map<Integer, Object> data;
+	protected Object[] columnNames;
+	protected final List<Object> data;
 
-	public ReportData()
-	{
-		this.data = new HashMap<>();
-		try { FillData(); responseMessage = "Data collecting succeed."; }
-		catch (ReportDataFillingException exc) { responseMessage = "Data collecting failed with message: " + exc.getMessage(); }
-		catch (Exception exc) { System.err.println(exc.getMessage()); exc.printStackTrace(); }
+	public ReportData() {
+		this.data = new ArrayList<>();
+		try {
+			FillData();
+			responseMessage = "Data collecting succeed.";
+		}
+		catch (ReportDataFillingException exc) {
+			responseMessage = "Data collecting failed with message: " + exc.getMessage();
+		}
+		catch (Exception exc) {
+			System.err.println(exc.getMessage()); exc.printStackTrace();
+		}
 	}
 
 	//required implementation in subclasses (each report type)
 	public abstract void FillData() throws ReportDataFillingException;
 
-	public Map<Integer, Object> getData()
-	{
+	public List<Object> getData() {
 		return this.data;
 	}
+	public Object[] getColumnNames() {
+		return this.columnNames;
+	}
 
-	public String getResponseMessage() {return this.responseMessage; }
+	public String getResponseMessage() {
+		return this.responseMessage;
+	}
 }
 

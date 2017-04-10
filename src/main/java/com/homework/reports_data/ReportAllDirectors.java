@@ -1,24 +1,22 @@
-package com.homework;
+package com.homework.reports_data;
 
+import com.homework.ReportData;
 import com.homework.hibernate.Analyzer;
 import com.homework.hibernate.HibernateUtil;
-import com.homework.hibernate.SlowSG;
+import com.homework.hibernate.query_results.AllDirectors;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Sasha on 09.04.17.
  */
-public class Report1 extends ReportData {
+public class ReportAllDirectors extends ReportData {
 
 	@Override
-	public void FillData()
-	{
-		//data filling implementation
+	public void FillData() {
 		Analyzer analyzer = new Analyzer();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
@@ -26,12 +24,11 @@ public class Report1 extends ReportData {
 		try {
 			transaction = session.beginTransaction();
 
-			/* 5. Find storagegroups that slow processing */
-			SlowSG slowSG = analyzer.findSG(session);
-			Iterator it = slowSG.GetContent().iterator();
+			columnNames = new Object[] {"key", "createdate", "id", "importkey"};
+			AllDirectors directors = analyzer.GetAllDirectors(session);
+			Iterator it = directors.GetContent().iterator();
 			while(it.hasNext()) {
-				Object[] data = (Object [])it.next();
-				this.data.put((Integer)data[0], data[2]);
+				this.data.add(it.next());
 			}
 
 			transaction.commit();
@@ -41,9 +38,5 @@ public class Report1 extends ReportData {
 		} finally {
 			session.close();
 		}
-		HibernateUtil.shutdown();
 	}
-
-
-
 }
