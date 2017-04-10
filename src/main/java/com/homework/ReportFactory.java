@@ -20,6 +20,10 @@ public class ReportFactory {
 				return new ReportProblemIntervals();
 			case "SlowStorageGroups":
 				return new ReportSlowStorageGroups();
+			case "QueueLoading":
+				return new ReportQueueLoading();
+			case "StorageGroupLoading":
+				return new ReportStorageGroupLoading();
 			default:
 				return new ReportData() {
 					@Override

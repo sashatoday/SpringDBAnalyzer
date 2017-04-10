@@ -7,7 +7,10 @@ import com.homework.hibernate.query_results.ProblemIntervals;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import sun.security.timestamp.TimestampToken;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 /**
@@ -28,7 +31,7 @@ public class ReportProblemIntervals extends ReportData {
 			ProblemIntervals intervals = analyzer.FindProblemIntervals(session);
 			Iterator it = intervals.GetContent().iterator();
 			while(it.hasNext()) {
-				Object data = (Object)it.next();
+				String data = new SimpleDateFormat("MM/dd HH:mm").format((Timestamp)it.next());
 				this.data.add(data);
 			}
 

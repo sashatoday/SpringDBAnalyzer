@@ -3,17 +3,19 @@ package com.homework.reports_data;
 import com.homework.ReportData;
 import com.homework.hibernate.Analyzer;
 import com.homework.hibernate.HibernateUtil;
-import com.homework.hibernate.query_results.SlowStorageGroups;
+import com.homework.hibernate.query_results.StorageGroupLoading;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 /**
- * Created by Sasha on 09.04.17.
+ * Created by Sasha on 10.04.17.
  */
-public class ReportSlowStorageGroups extends ReportData {
+public class ReportStorageGroupLoading extends ReportData {
 
 	@Override
 	public void FillData() {
@@ -24,11 +26,13 @@ public class ReportSlowStorageGroups extends ReportData {
 		try {
 			transaction = session.beginTransaction();
 
-			columnNames = new Object[] {"key", "id", "count failed intervals"};
-			SlowStorageGroups slowSGs = analyzer.FindSlowStorageGroups(session);
-			Iterator it = slowSGs.GetContent().iterator();
+			columnNames = new Object[] {"time, count6, count7"};
+			String sgId = "VHDC2DBESX_SG";
+			StorageGroupLoading sgLoading = analyzer.GetSGLoading(session, sgId);
+			Iterator it = sgLoading.GetContent().iterator();
 			while(it.hasNext()) {
 				Object[] data = (Object [])it.next();
+				data[0] = new SimpleDateFormat("MM/dd HH:mm").format((Timestamp)data[0]);
 				this.data.add(data);
 			}
 

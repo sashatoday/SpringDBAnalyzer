@@ -28,8 +28,7 @@ public class ReportProblemDirectors extends ReportData {
 			ProblemDirectors dirIds = analyzer.FindProblemDirs(session);
 			Iterator it = dirIds.GetContent().iterator();
 			while(it.hasNext()) {
-				Object data = (Object)it.next();
-				this.data.add(data);
+				this.data.add(it.next());
 			}
 
 			transaction.commit();
